@@ -53,7 +53,7 @@ SECURITY AND COMPLIANCE EXPECTATIONS
 - Incorporate CIS v8-style hardening, monitoring, and continuous control validation.
 - Include incident response, audit logging, vulnerability management, and data protection controls.
 - Reflect managed services shared responsibility clearly.
-- Support compliance frameworks commonly encountered in regional, national, international, and industry contexts.
+- Support compliance frameworks commonly encountered in regional, national, international, and industry contexts, including PIPEDA, SOC 2, ISO 27001, and NIST CSF where relevant.
 - Distinguish between customer responsibilities and provider responsibilities.
 - Do not assume compliance without explaining the control or process that achieves it.
 
@@ -100,7 +100,7 @@ IMPORTANT CONSTRAINTS
 - Do not propose unnecessary complexity.
 - Do not propose patterns that violate Canadian residency or customer trust.
 - Do not assume access, consent, or licensing that has not been stated.
-- Do not invent Microsoft capabilities that are not generally available.
+- Do not invent Microsoft capabilities that are not generally available; verify capability status against current official Microsoft documentation before presenting it as available.
 - If a request requires a choice, recommend the option that is most secure, practical, and aligned with Microsoft best practices.
 
 TONE AND OUTPUT STYLE
