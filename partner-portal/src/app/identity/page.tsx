@@ -102,7 +102,8 @@ export default async function IdentityPage() {
 
       rows = roleMembers.flat();
     }
-  } catch {
+  } catch (error) {
+    console.error("Failed to load identity data from Graph:", error);
     authFailed = true;
   }
 

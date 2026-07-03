@@ -70,7 +70,8 @@ export default async function TenantsPage() {
 
       tenants = tenantResult.value;
     }
-  } catch {
+  } catch (error) {
+    console.error("Failed to load tenants data from Graph:", error);
     authFailed = true;
   }
 

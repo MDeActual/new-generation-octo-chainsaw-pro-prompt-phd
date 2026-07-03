@@ -83,9 +83,10 @@ export default async function SecurityPage() {
       ]);
 
       alerts = alertResult.value;
-      secureScore = scoreResult.value[0] ?? null;
+      secureScore = scoreResult.value.length > 0 ? scoreResult.value[0] : null;
     }
-  } catch {
+  } catch (error) {
+    console.error("Failed to load security data from Graph:", error);
     authFailed = true;
   }
 
