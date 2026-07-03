@@ -48,7 +48,7 @@ async function getAccessToken() {
 async function graphGet<T>(path: string, accessToken: string): Promise<T> {
   const response = await fetch(`https://graph.microsoft.com${path}`, {
     headers: {
-      Authorization: ["Bearer", accessToken].join(" "),
+      Authorization: "Bearer " + accessToken,
     },
     cache: "no-store",
   });

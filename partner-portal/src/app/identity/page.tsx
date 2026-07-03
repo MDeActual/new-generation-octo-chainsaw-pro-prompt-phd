@@ -53,7 +53,7 @@ async function getAccessToken() {
 async function graphGet<T>(path: string, accessToken: string): Promise<T> {
   const response = await fetch(`https://graph.microsoft.com${path}`, {
     headers: {
-      Authorization: ["Bearer", accessToken].join(" "),
+      Authorization: "Bearer " + accessToken,
     },
     cache: "no-store",
   });
@@ -84,25 +84,23 @@ export default async function IdentityPage() {
         role.displayName?.toLowerCase().includes("admin"),
       );
 
-      const output: AdminRoleRow[] = [];
+      const roleMembers = await Promise.all(
+        adminRoles.map(async (role) => {
+          const memberResult = await graphGet<{ value: GraphUser[] }>(
+            `/v1.0/directoryRoles/${role.id}/members/microsoft.graph.user?$select=id,displayName,userPrincipalName`,
+            accessToken,
+          );
 
-      for (const role of adminRoles) {
-        const memberResult = await graphGet<{ value: GraphUser[] }>(
-          `/v1.0/directoryRoles/${role.id}/members/microsoft.graph.user?$select=id,displayName,userPrincipalName`,
-          accessToken,
-        );
-
-        for (const user of memberResult.value) {
-          output.push({
+          return memberResult.value.map((user) => ({
             id: `${role.id}-${user.id}`,
             name: user.displayName ?? "Unknown",
             upn: user.userPrincipalName ?? "Unknown",
             role: role.displayName ?? "Unknown",
-          });
-        }
-      }
+          }));
+        }),
+      );
 
-      rows = output;
+      rows = roleMembers.flat();
     }
   } catch {
     authFailed = true;
