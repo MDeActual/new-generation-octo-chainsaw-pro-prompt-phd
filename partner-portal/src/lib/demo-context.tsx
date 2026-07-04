@@ -7,10 +7,7 @@ interface DemoContextValue {
   setIsDemo: (v: boolean) => void;
 }
 
-const DemoContext = createContext<DemoContextValue>({
-  isDemo: true,
-  setIsDemo: () => {},
-});
+const DemoContext = createContext<DemoContextValue | undefined>(undefined);
 
 export function DemoProvider({ children }: { children: React.ReactNode }) {
   const [isDemo, setIsDemo] = useState(true);
@@ -22,5 +19,9 @@ export function DemoProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function useDemo() {
-  return useContext(DemoContext);
+  const ctx = useContext(DemoContext);
+  if (!ctx) {
+    throw new Error("useDemo must be used within <DemoProvider>.");
+  }
+  return ctx;
 }
